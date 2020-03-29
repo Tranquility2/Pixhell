@@ -1,2 +1,6 @@
 .vs
 build/
+out/
+install/
+dep/
+artifact/
