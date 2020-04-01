@@ -1,6 +1,9 @@
-SET(SDL2DIR	${CMAKE_SOURCE_DIR}/../install/sdl)
+#SET(SDL2DIR	${CMAKE_SOURCE_DIR}/../install/sdl)
 
-FIND_PATH(SDL2_INCLUDE_DIR 
+message("FindSDL2")
+message("${SDL2DIR}")
+
+FIND_PATH(SDL2_INCLUDE_DIR
 	NAMES SDL.h
 	HINTS ${SDL2DIR}
 	PATH_SUFFIXES include/SDL2 include
@@ -23,6 +26,8 @@ SET(SDL2_LIBRARY ${SDL2MAIN_LIBRARY} ${SDL2_LIBRARY})
 SET(SDL2_LIBRARY ${SDL2_LIBRARY} CACHE STRING "Where the SDL2 Library can be found")
 SET(SDL2_INCLUDE_DIR ${SDL2_INCLUDE_DIR} CACHE STRING "Where the SDL2 Includes can be found")
 SET(SDL2_BINARY ${SDL2DIR}/bin CACHE STRING "Where the SDL2 Binary can be found")
+
+message("${SDL2_BINARY}")
 
 INCLUDE(FindPackageHandleStandardArgs)
  

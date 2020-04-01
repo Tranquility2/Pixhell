@@ -15,12 +15,14 @@ set(CMAKE_MODULE_PATH "${PROJECT_SOURCE_DIR}/cmake")
 
 ###-------------------------------------------------###
 
+SET(SDL2DIR ${CMAKE_SOURCE_DIR}/install/sdl CACHE STRING "Where the SDL2 Install can be found")
+
 ExternalProject_Add(sdl
   GIT_REPOSITORY "https://github.com/SDL-mirror/SDL"
   GIT_TAG "master"
 
   SOURCE_DIR "${CMAKE_SOURCE_DIR}/dep/sdl"
-  CMAKE_ARGS -DCMAKE_INSTALL_PREFIX=${CMAKE_SOURCE_DIR}/install/sdl/ -DCMAKE_DEBUG_POSTFIX=_d 
+  CMAKE_ARGS -DCMAKE_INSTALL_PREFIX=${SDL2DIR} -DCMAKE_DEBUG_POSTFIX=_d 
 )
 
 #ExternalProject_Add(sdl_image
@@ -49,5 +51,5 @@ ExternalProject_Add(pixhell
   DEPENDS sdl
 
   SOURCE_DIR "${CMAKE_SOURCE_DIR}/pixhell/"
-  CMAKE_ARGS -DCMAKE_INSTALL_PREFIX=${CMAKE_SOURCE_DIR}/artifact/ -DCMAKE_DEBUG_POSTFIX=_d -DCMAKE_MODULE_PATH=${PROJECT_SOURCE_DIR}/cmake
+  CMAKE_ARGS -DCMAKE_INSTALL_PREFIX=${CMAKE_SOURCE_DIR}/artifact/ -DCMAKE_DEBUG_POSTFIX=_d -DCMAKE_MODULE_PATH=${PROJECT_SOURCE_DIR}/cmake -DSDL2DIR=${SDL2DIR}
 )
