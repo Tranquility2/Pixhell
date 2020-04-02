@@ -15,8 +15,9 @@ set(CMAKE_MODULE_PATH "${PROJECT_SOURCE_DIR}/cmake")
 
 ###-------------------------------------------------###
 
-SET(SDL2DIR ${CMAKE_SOURCE_DIR}/install/sdl CACHE STRING "Where the SDL2 Install can be found")
+SET(INSTALL_DIR ${CMAKE_SOURCE_DIR}/install)
 
+SET(SDL2DIR ${INSTALL_DIR}/sdl CACHE STRING "Where the SDL2 Install can be found")
 ExternalProject_Add(sdl
   GIT_REPOSITORY "https://github.com/SDL-mirror/SDL"
   GIT_TAG "master"
@@ -25,14 +26,24 @@ ExternalProject_Add(sdl
   CMAKE_ARGS -DCMAKE_INSTALL_PREFIX=${SDL2DIR} -DCMAKE_DEBUG_POSTFIX=_d 
 )
 
+SET(zlib_DIR ${INSTALL_DIR}/zlib CACHE STRING "Where the Zlib Install can be found")
+ExternalProject_Add(zlib
+
+  GIT_REPOSITORY "https://github.com/commontk/zlib.git"
+  GIT_TAG "master"
+
+  SOURCE_DIR "${CMAKE_SOURCE_DIR}/dep/zlib"
+  CMAKE_ARGS -DCMAKE_INSTALL_PREFIX=${zlib_DIR} -DZLIB_MANGLE_PREFIX:STRING=itkexamples_zlib_ -DCMAKE_DEBUG_POSTFIX=_d 
+)
+
 #ExternalProject_Add(sdl_image
-#  DEPENDS sdl
+#  DEPENDS sdl zlib
 #
 #  GIT_REPOSITORY "https://github.com/SDL-mirror/SDL_image"
 #  GIT_TAG "master"
 #
 #  SOURCE_DIR "${CMAKE_SOURCE_DIR}/dep/sdl_image"
-#  CMAKE_ARGS -DCMAKE_INSTALL_PREFIX=${CMAKE_SOURCE_DIR}/install/sdl_image/ -DCMAKE_DEBUG_POSTFIX=_d -DCMAKE_MODULE_PATH=${PROJECT_SOURCE_DIR}/cmake
+#  CMAKE_ARGS -DCMAKE_INSTALL_PREFIX=${INSTALL_DIR}/sdl_image/ -DCMAKE_MODULE_PATH=${PROJECT_SOURCE_DIR}/cmake -DSDL2DIR=${SDL2DIR} -Dzlib_DIR=${zlib_DIR}
 #)
 
 #ExternalProject_Add(sdl_ttf
@@ -42,7 +53,7 @@ ExternalProject_Add(sdl
 #  GIT_TAG "master"
 #
 #  SOURCE_DIR "${CMAKE_SOURCE_DIR}/dep/sdl_ttf"
-#  CMAKE_ARGS -DCMAKE_INSTALL_PREFIX=${CMAKE_SOURCE_DIR}/install/sdl_ttf/ -DCMAKE_DEBUG_POSTFIX=_d -DCMAKE_MODULE_PATH=${PROJECT_SOURCE_DIR}/cmake
+#  CMAKE_ARGS -DCMAKE_INSTALL_PREFIX=${INSTALL_DIR}/sdl_ttf/ -DCMAKE_DEBUG_POSTFIX=_d -DCMAKE_MODULE_PATH=${PROJECT_SOURCE_DIR}/cmake -DSDL2DIR=${SDL2DIR}
 #)
 
 ###-------------------------------------------------###
